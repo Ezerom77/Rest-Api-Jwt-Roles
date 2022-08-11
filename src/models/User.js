@@ -3,15 +3,15 @@ import bcrypt from "bcryptjs";
 
 const userSchema = new Schema({
   username: {
-    type: "string",
+    type: String,
     unique: true,
   },
   email: {
-    type: "string",
+    type: String,
     unique: true,
   },
   password: {
-    type: "string",
+    type: String,
     required: true,
   },
   roles: [
@@ -22,13 +22,14 @@ const userSchema = new Schema({
   ],
 });
 
-userSchema.statics.encryptPassword = async (password) =>{
-  const salt = bcrypt.genSalt(10);
-  return await bcrypr.hash(password, salt)
-}
+userSchema.statics.encryptPassword =  (password) => {
+  // const salt = await bcrypt.genSalt(10);
+  // return await bcrypt.hash(password, salt);
+  return  bcrypt.hashSync(password, 10)
+};
 
-userSchema.statics.comparePassword = async (password,recibedPassword) =>{
-  return bcrypt.compare(password,recibedPassword)
-}
+userSchema.statics.comparePassword = async (password, recivedPassword) => {
+  return await bcrypt.compare(password, recivedPassword);
+};
 
-export default model('User', userSchema)
+export default model("User", userSchema);
